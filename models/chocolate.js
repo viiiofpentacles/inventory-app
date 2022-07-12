@@ -15,7 +15,7 @@ var ChocolateSchema = new Schema(
 ChocolateSchema
 .virtual('url')
 .get(function () {
-    return '/chocolates/' + this._id;
+    return '/chocolate/' + this._id;
 });
 
 ChocolateSchema
