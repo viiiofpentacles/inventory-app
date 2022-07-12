@@ -5,9 +5,10 @@ var ChocolateSchema = new Schema(
     {
         name: {type: String, required: true, maxLength: 100},
         desc: {type: String},
-        price: {type: Number},
+        price: {type: Number, required: true},
         origin: {type: Schema.Types.ObjectId, ref: 'Origin', required: true},
-        category: {type: Schema.Types.ObjectId, ref: 'Category', required: true}
+        category: {type: Schema.Types.ObjectId, ref: 'Category', required: true},
+        stock: {type: Number, required: true}
     }
 );
 
@@ -20,7 +21,7 @@ ChocolateSchema
 ChocolateSchema
 .virtual('origin string')
 .get(function () {
-    return this.origin.plantation + ',' + this.origin.country;
+    return this.origin.plantation + 'plantation, ' + this.origin.country;
 });
 
 module.exports = mongoose.model('Chocolate', ChocolateSchema);

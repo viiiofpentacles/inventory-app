@@ -7,7 +7,7 @@ var CategorySchema = new Schema(
     }
 );
 
-OriginSchema
+CategorySchema
 .virtual('url')
 .get(function () {
     return '/categories/' + this._id;
