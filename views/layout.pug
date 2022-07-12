@@ -7,23 +7,22 @@ html(lang='en')
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
     div(class='container')
-      div(class='row')
-        div(class='menu-box')
-          block menu
-            ul(class='nav')
-              li
-                a(href='/') Home
-              li
-                a(href='/chocolates') Browse all chocolates
-              li
-                a(href='/origins') Browse by origins
-              li
-                a(href='/categories') Browse by categories
-              br
-              li
-                a(href='/chocolate/create') Add chocolate
-              li
-                a(href='/origin/create') Add origin
+      div(class='content-box')
+        block menu
+          ul(class='nav')
+            li
+              a(href='/') Home
+            li
+              a(href='/chocolates') Browse all chocolates
+            li
+              a(href='/origins') Browse by origins
+            li
+              a(href='/categories') Browse by categories
+            br
+            li
+              a(href='/chocolate/create') Add chocolate
+            li
+              a(href='/origin/create') Add origin
 
         div(class='content-display')
           block content
