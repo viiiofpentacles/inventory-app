@@ -26,9 +26,11 @@ router.get('/origin/:id/delete', origin_controller.origin_delete_get);
 router.get('/origin/:id/delete', origin_controller.origin_delete_post);
 router.get('/origin/:id/update', origin_controller.origin_update_get);
 router.get('/origin/:id/update', origin_controller.origin_update_post);
+router.get('/origin/:id', origin_controller.origin_detail);
 router.get('/origins', origin_controller.origin_list);
 
 //category route
+router.get('/category/:id', category_controller.category_detail);
 router.get('/categories', category_controller.category_list);
 
 module.exports = router;

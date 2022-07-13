@@ -19,9 +19,9 @@ ChocolateSchema
 });
 
 ChocolateSchema
-.virtual('origin string')
+.virtual('origin_string')
 .get(function () {
-    return this.origin.plantation + 'plantation, ' + this.origin.country;
+    return this.origin.plantation + ' plantation, ' + this.origin.country;
 });
 
 module.exports = mongoose.model('Chocolate', ChocolateSchema);

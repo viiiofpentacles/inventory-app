@@ -1,0 +1,16 @@
+extends layout
+
+block content
+
+  h1 Category: #{category.name}
+
+  div
+
+    h2 Browse our collection of #{category.name} chocolates.
+
+    ul
+      each chocolate in chocolates
+        li
+            a(href=chocolate.url) #{chocolate.name}
+      else
+        p There are currently no #{category.name} chocolates.

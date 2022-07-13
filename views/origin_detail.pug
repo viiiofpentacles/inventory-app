@@ -1,0 +1,16 @@
+extends layout
+
+block content
+
+  h1 Origin: #{origin.country}, #{origin.plantation} plantation
+
+  div
+
+    h2 Browse our collection of chocolates made in #{origin.country}, #{origin.plantation} plantation.
+
+    ul
+      each chocolate in chocolates
+        li
+            a(href=chocolate.url) #{chocolate.name}
+      else
+        p There are currently no chocolates from #{origin.country}, #{origin.plantation} plantation.
