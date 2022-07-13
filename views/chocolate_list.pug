@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  h1= title
+
+  ul
+    each chocolate in chocolates_list
+        li
+            a(href=chocolate.url) #{chocolate.name}
+            p #{chocolate.desc}
+    else
+        li There are currently no chocolates in stock. Check back soon!
