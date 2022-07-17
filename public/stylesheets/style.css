@@ -1,7 +1,7 @@
 body {
   padding: 0;
   margin: 0;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 1.2rem 'Ibarra Real Nova', serif;
 }
 
 a {
@@ -10,6 +10,7 @@ a {
 }
 
 a:hover {
+  color: rgb(78, 78, 78);
   text-decoration: underline;
 }
 
@@ -28,4 +29,33 @@ li {
 
 .content-display {
   padding: 2rem;
+}
+
+.name-text {
+  font-size: 1.5rem;
+  text-decoration: underline;
+}
+
+.name-text:hover {
+  text-decoration: none;
+}
+
+form {
+  width: 20%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+label {
+  text-align: end;
+}
+
+button {
+  width: 3rem;
+  justify-self: end;
+}
+
+button:hover {
+  cursor: pointer;
 }

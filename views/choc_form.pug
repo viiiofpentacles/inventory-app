@@ -1,0 +1,34 @@
+extends layout
+
+block content
+  h1 #{title}
+
+  form(method = 'POST' action = '')
+    label(for = 'name') Name:
+    input#name(type = 'text', placeholder = 'Sunset' name = 'name' value = (undefined === chocolate? '' : chocolate.name))
+    label(for = 'desc') Description:
+    textarea#desc(type = 'text', placeholder = 'describe the product' name = 'desc' value = (undefined === chocolate? '' : chocolate.desc))
+    label(for = 'price') Price:
+    input#price(type = 'tel', placeholder = '1' name = 'price' value = (undefined === chocolate? '' : chocolate.price))
+    label(for = 'origin') Origin:
+    select#origin(type = 'select', name = 'origin', required = 'true', placeholder = 'Select origin')
+      each origin in origins
+        if chocolate
+          option(value=origin._id selected=(origin._id.toString()===chocolate.origin._id.toString() ? 'selected' : false) ) #{origin.country}, #{origin.plantation} plantation)
+        else 
+          option(value=origin._id) #{origin.country}, #{origin.plantation} plantation
+    label(for = 'category') Category:
+    select#category(type = 'select', name = 'category', required = 'true', placeholder = 'Select category')
+      each category in categories
+        if chocolate
+          option(value=category._id selected=(category._id.toString()===chocolate.category._id.toString() ? 'selected' : false) ) #{category.name})
+        else 
+          option(value=category._id) #{category.name}
+    label(for = 'stock') Stock:
+    input#stock(type = 'tel', placeholder = '0' name = 'stock' value = (undefined === chocolate? '' : chocolate.stock))
+    button(type = 'submit') Add
+
+  if errors
+    ul
+      for error in errors
+        li != error.msg
