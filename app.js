@@ -9,7 +9,13 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
+var compression = require('compression');
+var helmet = require('helmet');
+
 var app = express();
+
+app.use(compression());
+app.use(helmet());
 
 //Set up mongoose connection
 var mongoose = require('mongoose');
