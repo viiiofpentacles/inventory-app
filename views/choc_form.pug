@@ -7,7 +7,7 @@ block content
     label(for = 'name') Name:
     input#name(type = 'text', placeholder = 'Sunset' name = 'name' value = (undefined === chocolate? '' : chocolate.name))
     label(for = 'desc') Description:
-    textarea#desc(type = 'text', placeholder = 'describe the product' name = 'desc' value = (undefined === chocolate? '' : chocolate.desc))
+    textarea#desc(type = 'text', placeholder = 'describe the product' name = 'desc') #{(undefined === chocolate? '' : chocolate.desc)}
     label(for = 'price') Price:
     input#price(type = 'tel', placeholder = '1' name = 'price' value = (undefined === chocolate? '' : chocolate.price))
     label(for = 'origin') Origin:
@@ -21,7 +21,7 @@ block content
     select#category(type = 'select', name = 'category', required = 'true', placeholder = 'Select category')
       each category in categories
         if chocolate
-          option(value=category._id selected=(category._id.toString()===chocolate.category._id.toString() ? 'selected' : false) ) #{category.name})
+          option(value=category._id selected=(category._id.toString()===chocolate.category._id.toString() ? 'selected' : false) ) #{category.name}
         else 
           option(value=category._id) #{category.name}
     label(for = 'stock') Stock:

@@ -100,13 +100,74 @@ exports.chocolate_create_post = [
 ];
 
 //Update
-exports.chocolate_update_get = function(req, res) {
-    res.send('delete form for chocolates')
+exports.chocolate_update_get = function(req, res, next) {
+    async.parallel({
+        chocolate(callback) {
+            Chocolate.findById(req.params.id).populate('origin').populate('category').exec(callback);
+        },
+        origins(callback) {
+            Origin.find(callback);
+        },
+        categories(callback) {
+            Category.find(callback);
+        },
+     }, function (err, results) {
+        if (err) {
+            return next (err);
+        }
+        if (results.chocolate === null) {
+            const err = new Error('Chocolate not found');
+            err.status = 404;
+            return next(err);
+        }
+        res.render('choc_form', { title: 'Update chocolate', chocolate: results.chocolate, origins: results.origins, categories: results.categories });
+    });
 };
 
-exports.chocolate_update_post = function(req, res) {
-    res.send('chocolate update post')
-};
+exports.chocolate_update_post = [
+    body('name', 'Chocolate must have a name.').trim().isLength({ min: 1}).escape(),
+    body('desc', 'Please provide a description of the chocolate').trim().isLength({ min: 1}).escape(),
+    body('price', 'Chocolate must have a price').trim().isLength({ min: 1}),
+
+    (req, res, next) => {
+        const errors = validationResult(req);
+        var chocolate = new Chocolate(
+            {
+                name: req.body.name,
+                desc: req.body.desc,
+                price: parseInt(req.body.price),
+                origin: req.body.origin,
+                category: req.body.category,
+                stock: parseInt(req.body.stock),
+                _id: req.params.id
+            }
+        );
+        if (!errors.isEmpty()) {
+            async.parallel({
+                origins(callback) {
+                    Origin.find(callback);
+                },
+                categories(callback) {
+                    Category.find(callback);
+                },
+             }, function (err, results) {
+                if (err) {
+                    return next (err);
+                }
+                res.render('choc_form', { title: 'Update chocolate', origins: results.origins, categories: results.categories, errors: errors.array() });
+             });
+             return;
+        }
+        else {
+            Chocolate.findByIdAndUpdate(req.params.id, chocolate, {}, function (err, updatedChoc) {
+                if (err) {
+                    return next (err);
+                }
+                res.redirect(updatedChoc.url)
+            })
+        }
+    }
+];
 
 //Delete
 exports.chocolate_delete_get = function(req, res, next) {

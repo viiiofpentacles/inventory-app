@@ -83,13 +83,51 @@ exports.origin_create_post = [
 ];
 
 //Update
-exports.origin_update_get = function(req, res) {
-    res.send('origins update form')
+exports.origin_update_get = function(req, res, next) {
+    async.parallel({
+        origin(callback) {
+            Origin.findById(req.params.id).exec(callback)
+        }
+    },
+    function (err, results) {
+        if (err) {
+            return next (err);
+        }
+        if (results.origin === null) {
+            const err = new Error('Origin not found');
+            err.status = 404;
+            return next(err);
+        }
+        res.render('origin_form', { title: 'Update origin', origin: results.origin });
+    });
 };
 
-exports.origin_update_post = function(req, res) {
-    res.send('origins update post')
-};
+exports.origin_update_post = [
+    body('country', 'Please indicate a country name.').trim().isLength({ min: 1}).escape(),
+    body('plantation', 'Please indicate a plantation name.').trim().isLength({ min: 1}).escape(),
+    (req, res, next) => {
+        const errors = validationResult(req);
+        let origin = new Origin (
+            {
+                country: req.body.country,
+                plantation: req.body.plantation,
+                _id: req.params.id
+            }
+        );
+        if (!errors.isEmpty) {
+            res.render('origin_form', { title: 'Update origin', origin: origin, errors: errors.array() });
+            return;
+        }
+        else {
+            Origin.findByIdAndUpdate(req.params.id, origin, {}, function (err, updatedOrigin) {
+                if (err) {
+                    return next (err);
+                }
+                res.redirect(updatedOrigin.url)
+            })
+        }
+    }
+];
 
 //Delete
 exports.origin_delete_get = function(req, res, next) {
