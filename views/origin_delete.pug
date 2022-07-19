@@ -1,0 +1,20 @@
+extends layout 
+
+block content 
+  h1 #{title}: #{origin.name}
+
+  if chocolates.length
+    p There are chocolates in the inventory that belong to this origin. Please ensure there are no chocolates under this origin before deleting it.
+
+    h2 List of chocolates 
+
+    ul
+    each chocolate in chocolates 
+      li
+        a(href = chocolate.url) #{chocolate.name}
+    
+  else
+    p Please click the delete button below to remove #{origin.name} from the inventory.
+
+    form(method = 'POST' action = '')
+      button(type = 'submit') Delete

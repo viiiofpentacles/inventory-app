@@ -92,10 +92,50 @@ exports.origin_update_post = function(req, res) {
 };
 
 //Delete
-exports.origin_delete_get = function(req, res) {
-    res.send('origins delete form')
+exports.origin_delete_get = function(req, res, next) {
+    async.parallel({
+        origin(callback) {
+            Origin.findById(req.params.id).exec(callback)
+        },
+        chocolates(callback) {
+            Chocolate.find({ 'origin': req.params.id }).exec(callback)
+        }
+    },
+    function (err, results) {
+        if (err) {
+            return next (err);
+        }
+        if (results.origin === null) {
+            res.redirect('/origins');
+        }
+        res.render('origin_delete', { title: 'Delete Origin', origin: results.origin, chocolates: results.chocolates })
+    });
 };
 
-exports.origin_delete_post = function(req, res) {
-    res.send('origins delete post')
+exports.origin_delete_post = function(req, res, next) {
+    async.parallel({
+        origin(callback) {
+            Origin.findById(req.params.id).exec(callback)
+        },
+        chocolates(callback) {
+            Chocolate.find({ 'origin': req.params.id }).exec(callback)
+        }
+    },
+    function (err, results) {
+        if (err) {
+            return next (err);
+        }
+        if (results.chocolates.length !== 0) {
+            res.render('origin_delete', { title: 'Delete Origin', origin: results.origin, chocolates: results.chocolates });
+            return;
+        }
+        else {
+            Origin.findByIdAndRemove(req.params.id, function removeOrigin (err) {
+                if (err) {
+                    return next (err);
+                }
+                res.redirect('/origins');
+            })
+        }
+    });
 };

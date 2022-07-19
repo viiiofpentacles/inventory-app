@@ -14,4 +14,10 @@ OriginSchema
     return '/origin/' + this._id;
 });
 
+OriginSchema
+.virtual('name')
+.get(function () {
+    return this.country + ', ' + this.plantation + ' plantation';
+})
+
 module.exports = mongoose.model('Origin', OriginSchema);

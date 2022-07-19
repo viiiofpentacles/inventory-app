@@ -1,0 +1,9 @@
+extends layout 
+
+block content
+  h1 #{title}: #{chocolate.name}
+
+  p Please click the delete button below to remove #{chocolate.name} from the inventory.
+
+  form(method = 'POST' action = '')
+    button(type = 'submit') Delete

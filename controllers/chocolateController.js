@@ -101,7 +101,7 @@ exports.chocolate_create_post = [
 
 //Update
 exports.chocolate_update_get = function(req, res) {
-    res.send('chocolate update form')
+    res.send('delete form for chocolates')
 };
 
 exports.chocolate_update_post = function(req, res) {
@@ -109,10 +109,28 @@ exports.chocolate_update_post = function(req, res) {
 };
 
 //Delete
-exports.chocolate_delete_get = function(req, res) {
-    res.send('chocolate delete form')
+exports.chocolate_delete_get = function(req, res, next) {
+    async.parallel({
+        chocolate(callback) {
+            Chocolate.findById(req.params.id).exec(callback)
+        }
+    },
+    function (err, results) {
+        if (err) { 
+            return next(err); 
+        }
+        if (results.chocolate==null) {
+            res.redirect('/chocolates');
+        }
+        res.render('choc_delete', { title: 'Delete chocolate', chocolate: results.chocolate })
+    });
 };
 
-exports.chocolate_delete_post = function(req, res) {
-    res.send('chocolate delete post')
+exports.chocolate_delete_post = function(req, res, next) {
+        Chocolate.findByIdAndRemove(req.params.id, function removeChoc(err) {
+            if (err) {
+                return next(err);
+            }
+            res.redirect('/chocolates')
+        });
 };

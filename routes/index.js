@@ -13,9 +13,9 @@ router.get('/', function(req, res, next) {
 router.get('/chocolate/create', chocolate_controller.chocolate_create_get);
 router.post('/chocolate/create', chocolate_controller.chocolate_create_post);
 router.get('/chocolate/:id/delete', chocolate_controller.chocolate_delete_get);
-router.get('/chocolate/:id/delete', chocolate_controller.chocolate_delete_post);
+router.post('/chocolate/:id/delete', chocolate_controller.chocolate_delete_post);
 router.get('/chocolate/:id/update', chocolate_controller.chocolate_update_get);
-router.get('/chocolate/:id/update', chocolate_controller.chocolate_update_post);
+router.post('/chocolate/:id/update', chocolate_controller.chocolate_update_post);
 router.get('/chocolate/:id', chocolate_controller.chocolate_detail);
 router.get('/chocolates', chocolate_controller.chocolate_list);
 
@@ -23,9 +23,9 @@ router.get('/chocolates', chocolate_controller.chocolate_list);
 router.get('/origin/create', origin_controller.origin_create_get);
 router.post('/origin/create', origin_controller.origin_create_post);
 router.get('/origin/:id/delete', origin_controller.origin_delete_get);
-router.get('/origin/:id/delete', origin_controller.origin_delete_post);
+router.post('/origin/:id/delete', origin_controller.origin_delete_post);
 router.get('/origin/:id/update', origin_controller.origin_update_get);
-router.get('/origin/:id/update', origin_controller.origin_update_post);
+router.post('/origin/:id/update', origin_controller.origin_update_post);
 router.get('/origin/:id', origin_controller.origin_detail);
 router.get('/origins', origin_controller.origin_list);
 
